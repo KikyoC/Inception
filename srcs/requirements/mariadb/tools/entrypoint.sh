@@ -28,7 +28,6 @@ else
 	echo "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> ${TMP}
 	echo "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> ${TMP}
 	echo "FLUSH PRIVILEGES;" >> ${TMP}
-
 	# Alpine does not come with service or rc-service,
 	# so we cannot use: service mysql start
 	# We might be able to install with: apk add openrc
