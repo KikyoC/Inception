@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ -f /etc/my.cnf.d/init.sql.template ]
+then
+	envsubst < /etc/my.cnf.d/init.sql.template > /etc/my.cnf.d/init.sql
+	rm -f /etc/my.cnf.d/init.sql.template
+	mysql_install_db --user=mysql -basedir=/usr --datadir=/var/lib/mysql
+fi
+
+
+exec /usr/bin/mariadbd --user=mysql --console --skip-name-resolve --skip-networking=0 "$@"
+
+echo "coucou"
+
+exec mariadb < /etc/my.cnf.d/init.sql

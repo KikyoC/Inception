@@ -1,0 +1,36 @@
+services:
+  database:
+    image: mariadb
+    container_name: mariadb
+    env_file: ".env"
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - database
+  wordpress:
+    container_name: 'wordpress'
+    image: wordpress
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - proxy
+      - database
+
+  nginx:
+    image: nginx
+    ports:
+      - '443:443'
+    container_name: nginx
+    networks:
+      - proxy
+    volumes:
+      - wordpress:/var/www/html
+volumes:
+  mariadb:
+  wordpress:
+
+networks:
+  proxy:
+    driver: bridge
+  database:
+    driver: bridge
