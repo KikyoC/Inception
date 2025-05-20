@@ -21,9 +21,11 @@ RUN apk add --no-cache \
     php84-mbstring \
     php84-zip \
     php84-imap \
+    php84-redis \
     curl \
     tar \
-    supervisor
+    supervisor \
+    gomplate
 
 RUN addgroup -g 1000 www && \
     adduser -D -u 1000 -G www -s /bin/sh www
@@ -42,11 +44,17 @@ RUN mkdir -p /run/php && \
     sed -i 's|^listen = .*|listen = 9000|' /etc/php84/php-fpm.d/www.conf && \
     sed -i 's|^;clear_env = no|clear_env = no|' /etc/php84/php-fpm.d/www.conf
 
-COPY supervisord.conf /etc/supervisord.conf
+COPY tools/supervisord.conf /etc/supervisord.conf
+COPY tools/wp-config.php /wp-config.php
+COPY tools/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 9000
 
 RUN chmod -R 777 /var/log/php84
 RUN chmod -R 777 /var/www/html
+#RUN gomplate < /wp-config.php > /var/www/html/wp-config.php
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
