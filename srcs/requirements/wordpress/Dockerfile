@@ -53,7 +53,6 @@ EXPOSE 9000
 
 RUN chmod -R 777 /var/log/php84
 RUN chmod -R 777 /var/www/html
-#RUN gomplate < /wp-config.php > /var/www/html/wp-config.php
 
 ENTRYPOINT ["/entrypoint.sh"]
 
