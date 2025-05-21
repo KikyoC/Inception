@@ -16,6 +16,12 @@ else
 	cd /etc/nginx && mkcert adminer.42.fr
 fi
 
-cd /etc/nginx ; ls
+if [ -e /etc/nginx/kuma.42.fr.pem ]
+then
+	echo "Certificate already generated"
+else
+	cd /etc/nginx && mkcert kuma.42.fr
+fi
+
 
 exec "$@"
