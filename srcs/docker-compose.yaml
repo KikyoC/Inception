@@ -62,12 +62,21 @@ services:
     networks:
       - adminer
       - database
-
-
-  
+  kuma:
+    container_name: "uptime_kuma"
+    env_file: ".env"
+    build:
+      context: requirements/uptimekuma
+      dockerfile: Dockerfile
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - kuma:/uptime-kuma
 volumes:
   mariadb:
   wordpress:
+  kuma:
 
 networks:
   proxy:
