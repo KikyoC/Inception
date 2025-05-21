@@ -22,6 +22,7 @@ RUN apk add --no-cache \
     php84-zip \
     php84-imap \
     php84-redis \
+    php84-ctype \
     curl \
     tar \
     supervisor \
