@@ -5,6 +5,7 @@ RUN apk add --no-cache nginx envsubst
 EXPOSE 443
 
 COPY tools/default.conf /etc/nginx/http.d/default.conf
+COPY tools/adminer.conf /etc/nginx/http.d/adminer.conf
 
 RUN mkdir -p /var/log/nginx && chown -R nginx:nginx /var/log/nginx
 
