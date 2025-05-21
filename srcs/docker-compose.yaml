@@ -33,6 +33,18 @@ services:
     build:
       context: requirements/nginx
       dockerfile: Dockerfile
+  ftp:
+    #image: lhauspie/vsftpd-alpine:latest
+    ports:
+      - "20:20"
+      - "21:21"
+      - "21100-21110:21100-21110"
+    container_name: "ftp"
+    build:
+      context: requirements/ftp
+      dockerfile: Dockerfile
+    volumes:
+      - wordpress:/var/www/html
   redis:
     container_name: "redis"
     env_file: ".env"
