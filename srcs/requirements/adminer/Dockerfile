@@ -32,12 +32,8 @@ RUN addgroup -g 1000 www && \
     adduser -D -u 1000 -G www -s /bin/sh www
 
 WORKDIR /var/www/html
-RUN curl -o wordpress.tar.gz https://wordpress.org/latest.tar.gz && \
-    tar -xzf wordpress.tar.gz && \
-    rm wordpress.tar.gz && \
-    mv wordpress/* . && \
-    rmdir wordpress && \
-    chown -R www:www /var/www
+
+RUN wget https://github.com/vrana/adminer/releases/download/v5.3.0/adminer-5.3.0.php -O /var/www/html/index.php
 
 RUN mkdir -p /run/php && \
     sed -i 's|^user = .*|user = www|' /etc/php84/php-fpm.d/www.conf && \
@@ -46,15 +42,10 @@ RUN mkdir -p /run/php && \
     sed -i 's|^;clear_env = no|clear_env = no|' /etc/php84/php-fpm.d/www.conf
 
 COPY tools/supervisord.conf /etc/supervisord.conf
-COPY tools/wp-config.php /wp-config.php
-COPY tools/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 
 EXPOSE 9000
 
 RUN chmod -R 777 /var/log/php84
 RUN chmod -R 777 /var/www/html
-
-ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
