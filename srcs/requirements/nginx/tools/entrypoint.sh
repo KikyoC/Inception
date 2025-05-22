@@ -23,5 +23,11 @@ else
 	cd /etc/nginx && mkcert kuma.42.fr
 fi
 
+if [ -e /etc/nginx/click.42.fr.pem ]
+then
+	echo "Certificate already generated"
+else
+	cd /etc/nginx && mkcert click.42.fr
+fi
 
 exec "$@"

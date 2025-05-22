@@ -73,6 +73,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - kuma:/uptime-kuma
+  click:
+    container_name: "clicker"
+    build:
+      context: requirements/click
+      dockerfile: Dockerfile
+    networks:
+      - proxy
 volumes:
   mariadb:
   wordpress:
