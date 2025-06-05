@@ -6,7 +6,7 @@ RUN git clone https://github.com/KikyoC/InceptionClicker.git core
 
 RUN chown nobody /var/log/
 
-COPY tools/supervisor.conf /etc/supervisord.conf
+COPY conf/supervisor.conf /etc/supervisord.conf
 
 WORKDIR /core
 

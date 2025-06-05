@@ -5,7 +5,7 @@ RUN apk add redis gomplate
 EXPOSE 6379
 
 COPY tools/entrypoint.sh /entrypoint.sh
-COPY tools/redis.conf /etc/redis.conf
+COPY conf/redis.conf /etc/redis.conf
 
 RUN chmod +x /entrypoint.sh
 

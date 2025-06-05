@@ -41,7 +41,7 @@ RUN mkdir -p /run/php && \
     sed -i 's|^listen = .*|listen = 9000|' /etc/php84/php-fpm.d/www.conf && \
     sed -i 's|^;clear_env = no|clear_env = no|' /etc/php84/php-fpm.d/www.conf
 
-COPY tools/supervisord.conf /etc/supervisord.conf
+COPY conf/supervisord.conf /etc/supervisord.conf
 
 EXPOSE 9000
 

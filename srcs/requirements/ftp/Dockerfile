@@ -12,8 +12,8 @@ RUN chown -R ftp:ftp /home/vsftpd/
 RUN adduser wordpress ; echo "wordpress:$FTP_PASSWORD" | chpasswd
 
 
-COPY tools/vsftpd-base.conf /etc/vsftpd/vsftpd.conf
-COPY tools/supervisor.conf /etc/supervisord.conf
+COPY conf/vsftpd-base.conf /etc/vsftpd/vsftpd.conf
+COPY conf/supervisor.conf /etc/supervisord.conf
 
 EXPOSE 20 21 21100-21110
 
