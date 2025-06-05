@@ -4,10 +4,10 @@ RUN apk add --no-cache nginx envsubst
 
 EXPOSE 443
 
-COPY tools/default.conf /etc/nginx/http.d/default.conf
-COPY tools/adminer.conf /etc/nginx/http.d/adminer.conf
-COPY tools/kuma.conf /etc/nginx/http.d/kuma.conf
-COPY tools/click.conf /etc/nginx/http.d/click.conf
+COPY conf/default.conf /etc/nginx/http.d/default.conf
+COPY conf/adminer.conf /etc/nginx/http.d/adminer.conf
+COPY conf/kuma.conf /etc/nginx/http.d/kuma.conf
+COPY conf/click.conf /etc/nginx/http.d/click.conf
 
 RUN mkdir -p /var/log/nginx && chown -R nginx:nginx /var/log/nginx
 
