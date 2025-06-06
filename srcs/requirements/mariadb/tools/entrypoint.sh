@@ -28,11 +28,8 @@ else
 	echo "CREATE DATABASE ${MYSQL_DATABASE};" >> ${TMP}
 	echo "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> ${TMP}
 	echo "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';" >> ${TMP}
+	echo "CREATE USER 'test'@'localhost' IDENTIFIED BY 'test';" >> ${TMP}
 	echo "FLUSH PRIVILEGES;" >> ${TMP}
-	# Alpine does not come with service or rc-service,
-	# so we cannot use: service mysql start
-	# We might be able to install with: apk add openrc
-	# But we can also manually start and configure the mysql daemon:
 	/usr/bin/mysqld --user=mysql --bootstrap < ${TMP}
 	rm -f ${TMP}
 	echo "Mariadb configured."

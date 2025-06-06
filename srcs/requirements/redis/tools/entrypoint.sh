@@ -1,5 +1,5 @@
 #!/bin/sh
 
-gomplate < /etc/redis.conf > /etc/redis.conf
+gomplate < /redis.conf > /etc/redis.conf
 
 exec "$@"
