@@ -1,5 +1,5 @@
 all:
-	docker compose -f srcs/docker-compose.yaml up -d
+	docker compose -f srcs/docker-compose.yaml -p "" up -d
 
 clean:
 	docker compose -f srcs/docker-compose.yaml down

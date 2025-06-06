@@ -1,4 +1,4 @@
-FROM alpine:3.21.3
+FROM alpine:3.22.0
 
 RUN apk add --no-cache \
     php84 \
@@ -23,6 +23,7 @@ RUN apk add --no-cache \
     php84-imap \
     php84-redis \
     php84-ctype \
+    php84-phar \
     curl \
     tar \
     supervisor \
@@ -44,6 +45,13 @@ RUN mkdir -p /run/php && \
     sed -i 's|^group = .*|group = www|' /etc/php84/php-fpm.d/www.conf && \
     sed -i 's|^listen = .*|listen = 9000|' /etc/php84/php-fpm.d/www.conf && \
     sed -i 's|^;clear_env = no|clear_env = no|' /etc/php84/php-fpm.d/www.conf
+
+
+#Default wordpress setup
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+chmod +x wp-cli.phar && \
+mv wp-cli.phar /usr/local/bin/wp
+
 
 COPY conf/supervisord.conf /etc/supervisord.conf
 COPY conf/wp-config.php /wp-config.php

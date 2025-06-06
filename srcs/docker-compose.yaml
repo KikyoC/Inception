@@ -10,10 +10,25 @@ services:
     build:
       context: requirements/mariadb
       dockerfile: Dockerfile
+    image: database
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "test", "-ptest", "--skip-ssl"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    pull_policy: never
   wordpress:
     restart: always
     container_name: 'wordpress'
     env_file: ".env"
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+      redis:
+        condition: service_started
+        restart: true
     volumes:
       - wordpress:/var/www/html
     networks:
@@ -23,6 +38,8 @@ services:
     build:
       context: requirements/wordpress
       dockerfile: Dockerfile
+    image: wordpress
+    pull_policy: never
   nginx:
     restart: always
     env_file: ".env"
@@ -37,6 +54,8 @@ services:
     build:
       context: requirements/nginx
       dockerfile: Dockerfile
+    image: nginx
+    pull_policy: never
   ftp:
     restart: always
     ports:
@@ -49,6 +68,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - wordpress:/var/www/html
+    image: ftp
+    pull_policy: never
   redis:
     container_name: "redis"
     env_file: ".env"
@@ -58,6 +79,8 @@ services:
     build:
       context: requirements/redis
       dockerfile: Dockerfile
+    image: redis
+    pull_policy: never
   adminer:
     container_name: "adminer"
     env_file: ".env"
@@ -68,6 +91,8 @@ services:
     networks:
       - adminer
       - database
+    image: adminer
+    pull_policy: never
   kuma:
     container_name: "uptime_kuma"
     restart: always
@@ -80,6 +105,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - kuma:/uptime-kuma
+    image: kuma
+    pull_policy: never
   click:
     container_name: "clicker"
     restart: always
@@ -88,6 +115,8 @@ services:
       dockerfile: Dockerfile
     networks:
       - proxy
+    image: click
+    pull_policy: never
 volumes:
   mariadb:
   wordpress:
