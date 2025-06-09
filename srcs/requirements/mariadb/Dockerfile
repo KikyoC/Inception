@@ -6,6 +6,6 @@ EXPOSE 3306
 
 COPY tools/entrypoint.sh /entrypoint.sh
 
-RUN chmod +x /entrypoint.sh && echo "agou agou baba"
+RUN chmod +x /entrypoint.sh
 
 CMD ["/entrypoint.sh"]
